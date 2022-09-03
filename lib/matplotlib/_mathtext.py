@@ -2354,10 +2354,12 @@ class Parser:
             shift = 0.
             width = nucleus.width
             if super is not None:
-                super.shrink()
+                for _ in range(3):
+                    super.shrink()
                 width = max(width, super.width)
             if sub is not None:
-                sub.shrink()
+                for _ in range(3):
+                    sub.shrink()
                 width = max(width, sub.width)
 
             vgap = rule_thickness * 3.0
@@ -2375,7 +2377,7 @@ class Parser:
                 shift = hlist.height + vgap + nucleus.depth
             vlist = Vlist(vlist)
             vlist.shift_amount = shift
-            result = Hlist([vlist])
+            result = Hlist([vlist, Kern(0.144 * xHeight)])
             return [result]
 
         # We remove kerning on the last character for consistency (otherwise
